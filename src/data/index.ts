@@ -5,7 +5,9 @@
 
 
 
-export { default as apartments } from "./apartments";
+
+
+export { apartments } from "./apartments";
 export { default as testimonials } from "./testimonials";
 export { default as amenities } from "./amenities";
 
