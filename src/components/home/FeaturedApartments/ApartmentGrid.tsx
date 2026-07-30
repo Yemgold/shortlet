@@ -31,7 +31,7 @@ export default function ApartmentGrid({
     >
       {apartments.map((apartment) => (
         <motion.div
-          key={apartment.id}
+          key={apartment._id}
           layout
           initial={{
             opacity: 0,
