@@ -1,50 +1,5 @@
 
 
-// "use client";
-
-// import Container from "@/components/ui/Container";
-// import HeroBackground from "./HeroBackground";
-// import HeroLeft from "./HeroLeft";
-// import HeroRight from "./HeroRight";
-
-// export default function Hero() {
-//   return (
-//     <section className="relative overflow-hidden">
-//       <HeroBackground />
-
-//       <Container>
-//         <div
-//           className="
-//             relative
-//             z-10
-
-//             min-h-[calc(100vh-80px)]
-
-//             grid
-
-//             items-center
-
-//             gap-20
-
-//             py-20
-
-//             lg:grid-cols-2
-//           "
-//         >
-//           <HeroLeft />
-
-//           <HeroRight />
-//         </div>
-//       </Container>
-//     </section>
-//   );
-// }
-
-
-
-
-
-
 
 "use client";
 

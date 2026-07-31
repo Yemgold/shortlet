@@ -46,23 +46,27 @@ export default function BookingSidebar({
     );
   }, [checkIn, checkOut]);
 
-  const subtotal =
-    apartment.pricePerNight * nights;
+console.log("Apartment:", apartment);
 
-  const cleaningFee =
-    apartment.cleaningFee;
+const pricePerNight = apartment.pricePerNight ?? 0;
+const cleaningFee = apartment.cleaningFee ?? 0;
+const securityDeposit = apartment.securityDeposit ?? 0;
+const discount = apartment.discount ?? 0;
 
-  const securityDeposit =
-    apartment.securityDeposit;
+console.log({
+  pricePerNight,
+  cleaningFee,
+  securityDeposit,
+  discount,
+});
 
-  const discount =
-    apartment.discount;
+const subtotal = pricePerNight * nights;
 
-  const total =
-    subtotal +
-    cleaningFee +
-    securityDeposit -
-    discount;
+const total =
+  subtotal +
+  cleaningFee +
+  securityDeposit -
+  discount;
 
   return (
     <aside

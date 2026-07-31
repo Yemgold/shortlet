@@ -244,18 +244,18 @@ export async function getApartmentById(
 
 
 // =======================================
-// Slug apartments
+// Get apartment by slug
 // =======================================
-
 
 export async function getApartmentBySlug(
   slug: string
 ): Promise<Apartment> {
-  const { data } = await api.get(
-    `/api/v1/apartments/${slug}`
-  );
+  const { data } =
+    await api.get<GetApartmentResponse>(
+      `/api/v1/apartments/get-apartment-by-slug/${slug}`
+    );
 
-  return data.data.apartment;
+  return data.data;
 }
 
 
@@ -371,7 +371,5 @@ export async function deleteApartment(
 
   return data;
 }
-
-
 
 

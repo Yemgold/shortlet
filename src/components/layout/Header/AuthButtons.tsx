@@ -22,9 +22,9 @@ export default function AuthButtons() {
       </Link>
 
       <Link href="/apartments">
-        <Button>
+        {/* <Button>
           Book Now
-        </Button>
+        </Button> */}
       </Link>
     </div>
   );

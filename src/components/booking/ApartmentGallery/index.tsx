@@ -35,6 +35,10 @@ export default function ApartmentGallery({
     )
     .map((item) => item.url);
 
+    console.log("Gallery media:", media);
+  console.log("Images:", images);
+  console.log("Selected image:", images[selectedIndex]);
+
   if (images.length === 0) {
     return (
       <div
@@ -89,19 +93,11 @@ export default function ApartmentGallery({
             bg-slate-100
           "
         >
-          <Image
-            src={images[selectedIndex]}
-            alt={title}
-            fill
-            priority
-            sizes="100vw"
-            className="
-              object-cover
-              transition-transform
-              duration-500
-              hover:scale-105
-            "
-          />
+         <img
+  src={images[selectedIndex]}
+  alt={title}
+  className="h-full w-full object-cover"
+/>
         </div>
 
         {/* Thumbnails */}

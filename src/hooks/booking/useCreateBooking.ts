@@ -5,16 +5,15 @@
 
 import { useMutation } from "@tanstack/react-query";
 
-import { createBooking } from "@/services/apartment.service";
-import { CreateBookingPayload,CreateBookingResponse } from "@/types/booking";
-
+import {
+  bookingService,
+  type CreateBookingPayload,
+} from "@/services/booking.service";
 
 export function useCreateBooking() {
-  return useMutation<
-    CreateBookingResponse,
-    Error,
-    CreateBookingPayload
-  >({
-    mutationFn: createBooking,
+  return useMutation({
+    mutationFn: (
+      payload: CreateBookingPayload
+    ) => bookingService.createBooking(payload),
   });
 }

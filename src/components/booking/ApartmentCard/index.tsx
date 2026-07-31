@@ -1,4 +1,5 @@
 
+
 "use client";
 
 import Link from "next/link";
@@ -11,29 +12,23 @@ import { Card } from "@/components/ui";
 import ApartmentImage from "@/components/booking/ApartmentImage";
 import ApartmentInfo from "@/components/booking/ApartmentInfo";
 
-// import ApartmentInfo from "../ApartmentInfo";
-
 interface ApartmentCardProps {
   apartment: Apartment;
 
   onFavorite?: (id: string) => void;
 
-  onBook?: (id: string) => void;
+  onCheckAvailability?: (id: string) => void;
 }
 
 export default function ApartmentCard({
   apartment,
   onFavorite,
-  onBook,
+  onCheckAvailability,
 }: ApartmentCardProps) {
   return (
     <motion.article
-      whileHover={{
-        y: -10,
-      }}
-      transition={{
-        duration: 0.25,
-      }}
+      whileHover={{ y: -10 }}
+      transition={{ duration: 0.25 }}
     >
       <Card
         padding="none"
@@ -65,17 +60,19 @@ export default function ApartmentCard({
           }
         />
 
-       <ApartmentInfo
-  title={apartment.name}
-  location={apartment.location}
-  price={apartment.pricePerNight}
-  bedrooms={apartment.bedrooms}
-  bathrooms={apartment.bathrooms}
-  guests={apartment.guests}
-  amenities={apartment.amenities}
-  onBook={() => onBook?.(apartment._id)}
-  onView={() => {}}
-/>
+        <ApartmentInfo
+          title={apartment.name}
+          location={apartment.location}
+          price={apartment.pricePerNight}
+          bedrooms={apartment.bedrooms}
+          bathrooms={apartment.bathrooms}
+          guests={apartment.guests}
+          amenities={apartment.amenities}
+          onCheckAvailability={() =>
+            onCheckAvailability?.(apartment._id)
+           }
+            showCheckAvailabilityButton={false}
+        />
 
         <div className="px-6 pb-6">
           <Link
@@ -94,7 +91,7 @@ export default function ApartmentCard({
               hover:text-white
             "
           >
-            View Apartment
+            View Apartment 
           </Link>
         </div>
       </Card>
