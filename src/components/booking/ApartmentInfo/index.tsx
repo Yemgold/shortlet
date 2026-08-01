@@ -125,8 +125,7 @@ console.log(onCheckAvailability);
   <Button
     className="w-full"
     onClick={() => {
-      console.log("Button clicked");
-      console.log("onCheckAvailability =", onCheckAvailability);
+    
       onCheckAvailability?.();
     }}
   >
