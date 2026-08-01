@@ -2,59 +2,13 @@
 
 
 
+
 "use client";
 
-import { useEffect } from "react";
+import { Suspense } from "react";
+import PaymentCallbackContent from "./PaymentCallbackContent";
 
-import { useRouter, useSearchParams } from "next/navigation";
-
-import api from "@/lib/axios";
-
-export default function PaymentCallbackPage() {
-  const router = useRouter();
-
-  const searchParams = useSearchParams();
-
-  useEffect(() => {
-    const reference =
-      searchParams.get("reference");
-
-    if (!reference) {
-      router.replace("/booking/failed");
-
-      return;
-    }
-
-    async function verifyPayment() {
-      try {
-        const response = await api.get(
-          `/api/v1/bookings/verify-payment/${reference}`
-        );
-
-        if (
-          response.data.success &&
-          response.data.data
-        ) {
-          router.replace(
-            `/booking/success?reference=${reference}`
-          );
-        } else {
-          router.replace(
-            `/booking/failed?reference=${reference}`
-          );
-        }
-      } catch (error) {
-        console.error(error);
-
-        router.replace(
-          `/booking/failed?reference=${reference}`
-        );
-      }
-    }
-
-    verifyPayment();
-  }, [router, searchParams]);
-
+function LoadingFallback() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-slate-50">
       <div className="text-center">
@@ -69,5 +23,13 @@ export default function PaymentCallbackPage() {
         </p>
       </div>
     </main>
+  );
+}
+
+export default function PaymentCallbackPage() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PaymentCallbackContent />
+    </Suspense>
   );
 }
