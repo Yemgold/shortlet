@@ -2,57 +2,6 @@
 
 
 
-// import api from "@/lib/axios";
-
-// export interface CheckAvailabilityPayload {
-//   apartmentId: string;
-//   checkInDate: string;
-//   checkOutDate: string;
-//   guests: number;
-// }
-
-// export interface AvailabilityResponse {
-//   available: boolean;
-//   message: string;
-//   totalNights: number;
-//   subtotal: number;
-//   cleaningFee: number;
-//   securityDeposit: number;
-//   discount: number;
-//   tax: number;
-//   total: number;
-// }
-
-// export const bookingService = {
-//   checkAvailability: async (
-//     payload: CheckAvailabilityPayload
-//   ) => {
-//     const {
-//       apartmentId,
-//       checkInDate,
-//       checkOutDate,
-//       guests,
-//     } = payload;
-
-//     const response = await api.get(
-//       `/api/v1/availability/check-apartment-dates-availability-by-apartmentId/${apartmentId}`,
-//       {
-//         params: {
-//           checkInDate,
-//           checkOutDate,
-//           guests,
-//         },
-//       }
-//     );
-
-//     return response.data;
-//   },
-// };
-
-
-
-
-
 import api from "@/lib/axios";
 
 export interface CheckAvailabilityPayload {
@@ -133,9 +82,9 @@ createBooking: async (
   payload: CreateBookingPayload
 ) => {
   const response = await api.post(
-    "/api/v1/bookings/create-booking/paystack",
+    "/api/v1/bookings/create-booking/paystack", 
     payload
-  );
+  );                             
 
   return response.data;
 },

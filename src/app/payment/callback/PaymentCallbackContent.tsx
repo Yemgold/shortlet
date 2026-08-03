@@ -1,5 +1,7 @@
 
+//  USE .... https://shortlet-backend.onrender.com/api/v1/payment/verify-payment/:provider/:reference 
 
+//  This is wrong: https://shortlet-backend.onrender.com/api/v1/bookings/verify-payment/rhn9d4qbua
 
 
 "use client";
@@ -24,16 +26,18 @@ export default function PaymentCallbackContent() {
     async function verifyPayment() {
       try {
         const response = await api.get(
-          `/api/v1/bookings/verify-payment/${reference}`
+          `/api/v1/payment/verify-payment/paystack/${reference}`
+
+           
         );
 
         if (response.data.success && response.data.data) {
           router.replace(
-            `/booking/success?reference=${reference}`
+            `/payment/success?reference=${reference}`
           );
         } else {
           router.replace(
-            `/booking/failed?reference=${reference}`
+            `/payment/failed?reference=${reference}`
           );
         }
       } catch (error) {
