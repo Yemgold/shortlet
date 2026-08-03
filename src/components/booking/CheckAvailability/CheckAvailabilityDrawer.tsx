@@ -188,33 +188,6 @@ useEffect(() => {
       return;
     }
 
-//     try {
-//   const result =
-
-//    await onCheckAvailability({
-//   apartmentId: apartment._id,
-//   checkInDate: checkIn,
-//   checkOutDate: checkOut,
-//   guests,
-// });
-
-
-//   if (result.available) {
-//     setStep("summary");
-//   } else {
-//     setError(
-//       result.message ??
-//         "Apartment is not available for the selected dates."
-//     );
-//   }
-// } catch {
-//   setError(
-//     "Unable to check availability."
-//   );
-// }
-// }
-
-
 
 try {
   setError("");
@@ -229,8 +202,14 @@ try {
   console.log("Availability Result:", result);
 
   if (result.available) {
-    setStep("summary");
-  } else {
+  console.log("Before:", step);
+
+  setStep("summary");
+
+  console.log("After calling setStep");
+}
+  
+  else {
     setError(
       result.message ||
         "Apartment is not available for the selected dates."
@@ -413,166 +392,160 @@ async function handlePayment() {
           {/* Body */}
 
           <div className="flex-1 overflow-y-auto p-6">
-            <AnimatePresence mode="wait">
 
- <motion.div
-  key={step}
-  initial={{ opacity: 0, x: 30 }}
-  animate={{ opacity: 1, x: 0 }}
-  exit={{ opacity: 0, x: -30 }}
-  transition={{ duration: 0.25 }}
->
-  {/* STEP 1 */}
-  {step === "availability" && (
-    <div className="space-y-6">
-      <DateRangePicker
-        value={dateRange}
-        onChange={setDateRange}
-        disabledDates={[]}
+
+<AnimatePresence mode="wait">
+  <motion.div
+    key={step}
+    initial={{ opacity: 0, x: 30 }}
+    animate={{ opacity: 1, x: 0 }}
+    exit={{ opacity: 0, x: -30 }}
+    transition={{ duration: 0.25 }}
+  >
+    {/* STEP 1 */}
+    {step === "availability" && (
+      <div className="space-y-6">
+        <DateRangePicker
+          value={dateRange}
+          onChange={setDateRange}
+          disabledDates={[]}
+        />
+
+        <GuestSelector
+          value={guests}
+          maxGuests={apartment.guests}
+          onChange={setGuests}
+        />
+      </div>
+    )}
+
+    {/* STEP 2 */}
+    {step === "summary" && availability && (
+      <BookingSummary
+        apartmentName={apartment.name}
+        checkIn={checkIn}
+        checkOut={checkOut}
+        guests={guests}
+        totalNights={availability.totalNights}
+        pricePerNight={apartment.pricePerNight}
+        subtotal={availability.subtotal}
+        cleaningFee={availability.cleaningFee}
+        securityDeposit={availability.securityDeposit}
+        total={availability.total}
+        onContinue={() => setStep("guest-details")}
       />
+    )}
 
-      <GuestSelector
-        value={guests}
-        maxGuests={apartment.guests}
-        onChange={setGuests}
+    {/* STEP 3 */}
+    {step === "guest-details" && (
+      <GuestDetailsForm
+        value={guestDetails}
+        onChange={setGuestDetails}
+        onBack={() => setStep("summary")}
+        onContinue={() => setStep("payment")}
       />
-    </div>
-  )}
+    )}
 
-  {/* STEP 2 */}
-  {step === "summary" && availability && (
-    <BookingSummary
-      apartmentName={apartment.name}
-      checkIn={checkIn}
-      checkOut={checkOut}
-      guests={guests}
-      totalNights={availability.totalNights}
-      pricePerNight={apartment.pricePerNight}
-      subtotal={availability.subtotal}
-      cleaningFee={availability.cleaningFee}
-      securityDeposit={availability.securityDeposit}
-      total={availability.total}
-      onContinue={() =>
-        setStep("guest-details")
-      }
-    />
-  )}
+    {/* STEP 4 */}
+    {step === "payment" && (
+      <div className="space-y-6 rounded-3xl border border-slate-200 bg-white p-6">
+        <h3 className="text-xl font-bold">
+          Payment
+        </h3>
 
-  {/* STEP 3 */}
-  {step === "guest-details" && (
-    <GuestDetailsForm
-      value={guestDetails}
-      onChange={setGuestDetails}
-      onBack={() =>
-        setStep("summary")
-      }
-      onContinue={() =>
-        setStep("payment")
-      }
-    />
-  )}
-</motion.div>
+        <p className="text-slate-500">
+          Review your booking before proceeding to Paystack.
+        </p>
 
+        <div className="space-y-4 rounded-xl bg-slate-50 p-5">
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Apartment
+            </span>
 
-{/* STEP 4 */}
+            <span className="font-semibold">
+              {apartment.name}
+            </span>
+          </div>
 
-{step === "payment" && (
-  <div className="space-y-6 rounded-3xl border border-slate-200 bg-white p-6">
-    <h3 className="text-xl font-bold">
-      Payment
-    </h3>
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Guest
+            </span>
 
-    <p className="text-slate-500">
-      Review your booking before proceeding to Paystack.
-    </p>
+            <span className="font-semibold">
+              {guestDetails.firstName}{" "}
+              {guestDetails.lastName}
+            </span>
+          </div>
 
-    <div className="space-y-4 rounded-xl bg-slate-50 p-5">
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Email
+            </span>
 
-      <div className="flex justify-between">
-        <span className="text-slate-500">Apartment</span>
+            <span className="font-semibold">
+              {guestDetails.email}
+            </span>
+          </div>
 
-        <span className="font-semibold">
-          {apartment.name}
-        </span>
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Phone
+            </span>
+
+            <span className="font-semibold">
+              {guestDetails.phone}
+            </span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Check-in
+            </span>
+
+            <span className="font-semibold">
+              {new Date(checkIn).toLocaleDateString()}
+            </span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Check-out
+            </span>
+
+            <span className="font-semibold">
+              {new Date(checkOut).toLocaleDateString()}
+            </span>
+          </div>
+
+          <div className="flex justify-between">
+            <span className="text-slate-500">
+              Guests
+            </span>
+
+            <span className="font-semibold">
+              {guests}
+            </span>
+          </div>
+
+          <hr />
+
+          <div className="flex justify-between text-lg font-bold">
+            <span>Total</span>
+
+            <span className="text-primary">
+              ₦{availability?.total.toLocaleString()}
+            </span>
+          </div>
+        </div>
       </div>
+    )}
+  </motion.div>
+</AnimatePresence>
 
-      <div className="flex justify-between">
-        <span className="text-slate-500">
-          Guest
-        </span>
 
-        <span className="font-semibold">
-          {guestDetails.firstName}{" "}
-          {guestDetails.lastName}
-        </span>
-      </div>
 
-      <div className="flex justify-between">
-        <span className="text-slate-500">
-          Email
-        </span>
-
-        <span className="font-semibold">
-          {guestDetails.email}
-        </span>
-      </div>
-
-      <div className="flex justify-between">
-        <span className="text-slate-500">
-          Phone
-        </span>
-
-        <span className="font-semibold">
-          {guestDetails.phone}
-        </span>
-      </div>
-
-      <div className="flex justify-between">
-        <span className="text-slate-500">
-          Check-in
-        </span>
-
-        <span className="font-semibold">
-          {new Date(checkIn).toLocaleDateString()}
-        </span>
-      </div>
-
-      <div className="flex justify-between">
-        <span className="text-slate-500">
-          Check-out
-        </span>
-
-        <span className="font-semibold">
-          {new Date(checkOut).toLocaleDateString()}
-        </span>
-      </div>
-
-      <div className="flex justify-between">
-        <span className="text-slate-500">
-          Guests
-        </span>
-
-        <span className="font-semibold">
-          {guests}
-        </span>
-      </div>
-
-      <hr />
-
-      <div className="flex justify-between text-lg font-bold">
-        <span>Total</span>
-
-        <span className="text-primary">
-          ₦{availability?.total.toLocaleString()}
-        </span>
-      </div>
-
-    </div>
-  </div>
-)}
-
-              
-            </AnimatePresence>
           </div>
 
 {/* Footer */}

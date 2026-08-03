@@ -19,7 +19,7 @@ export default function PaymentCallbackContent() {
     const reference = searchParams.get("reference");
 
     if (!reference) {
-      router.replace("/booking/failed");
+      router.replace("/payment/failed");
       return;
     }
 
@@ -44,7 +44,7 @@ export default function PaymentCallbackContent() {
         console.error(error);
 
         router.replace(
-          `/booking/failed?reference=${reference}`
+          `/payment/failed?reference=${reference}`
         );
       }
     }
