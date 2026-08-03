@@ -1,8 +1,6 @@
 
 
-
-
-import Link from "next/link";
+import PaymentSuccessClient from "./PaymentSuccessClient";
 
 interface PaymentSuccessPageProps {
   searchParams: Promise<{
@@ -16,16 +14,8 @@ export default async function PaymentSuccessPage({
   const { reference } = await searchParams;
 
   return (
-    <main className="min-h-screen flex items-center justify-center">
-      <div>
-        <h1 className="text-3xl font-bold">
-          Payment Successful
-        </h1>
-
-        <p>{reference}</p>
-
-        <Link href="/">Home</Link>
-      </div>
-    </main>
+    <PaymentSuccessClient
+      reference={reference ?? ""}
+    />
   );
 }
