@@ -81,23 +81,32 @@ export default function PaymentSuccessClient({
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row">
             <Link href="/" className="flex-1">
-              <Button className="w-full">
-                <Home size={18} className="mr-2" />
-                Back to Home
-              </Button>
-            </Link>
+            <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+  <Link
+    href="/login"
+    className="flex-1"
+  >
+    <Button className="w-full">
+      Track Your Booking
+      <ArrowRight
+        size={18}
+        className="ml-2"
+      />
+    </Button>
+  </Link>
 
-            <Link href="/apartments" className="flex-1">
-              <Button
-                variant="outline"
-                className="w-full"
-              >
-                Browse Apartments
-                <ArrowRight
-                  size={18}
-                  className="ml-2"
-                />
-              </Button>
+  <Link
+    href="/register"
+    className="flex-1"
+  >
+    <Button
+      variant="outline"
+      className="w-full"
+    >
+      Create an Account
+    </Button>
+  </Link>
+</div>
             </Link>
           </div>
         </motion.div>
